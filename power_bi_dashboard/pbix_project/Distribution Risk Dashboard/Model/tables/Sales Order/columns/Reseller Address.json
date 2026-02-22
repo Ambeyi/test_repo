@@ -1,0 +1,6 @@
+{
+  "name": "Reseller Address",
+  "dataType": "string",
+  "sourceColumn": "Reseller Address",
+  "summarizeBy": "none"
+}

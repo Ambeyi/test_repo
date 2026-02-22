@@ -1,0 +1,7 @@
+{
+  "name": "Sales Order Qty",
+  "dataType": "int64",
+  "sourceColumn": "Sales Order Qty",
+  "summarizeBy": "sum",
+  "formatString": "0"
+}

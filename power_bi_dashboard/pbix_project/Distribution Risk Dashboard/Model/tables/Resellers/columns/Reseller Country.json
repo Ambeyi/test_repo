@@ -1,0 +1,7 @@
+{
+  "name": "Reseller Country",
+  "dataType": "string",
+  "sourceColumn": "Reseller Country",
+  "summarizeBy": "none",
+  "dataCategory": "Country"
+}

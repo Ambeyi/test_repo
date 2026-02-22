@@ -1,0 +1,6 @@
+{
+  "name": "SubCategory",
+  "dataType": "string",
+  "sourceColumn": "SubCategory",
+  "summarizeBy": "none"
+}

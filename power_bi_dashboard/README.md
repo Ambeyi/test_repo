@@ -20,6 +20,12 @@ It is designed around your request to **keep the forecast line chart** and **add
   Ready-to-paste DAX measures and Date table definition.
 - `docs/dashboard_build_guide.md`  
   Step-by-step Power BI build instructions.
+- `build_power_bi_template.py`  
+  Generates a prebuilt Power BI project and compiles a ready `.pbit` dashboard file.
+- `pbix/Distribution_Risk_Dashboard.pbit`  
+  Prebuilt dashboard template with visuals, model, and risk measures.
+- `pbix_project/Distribution Risk Dashboard/`  
+  Source project folder used to compile the template.
 
 ## Quick start
 
@@ -30,6 +36,17 @@ It is designed around your request to **keep the forecast line chart** and **add
 2. Open Power BI Desktop.
 3. Import both CSV files from `power_bi_dashboard/data/`.
 4. Follow `docs/dashboard_build_guide.md`.
+
+## Prebuilt dashboard file
+
+If you want a prepared file immediately, use:
+
+- `power_bi_dashboard/pbix/Distribution_Risk_Dashboard.pbit`
+
+Open it in Power BI Desktop, refresh, then **Save As** `.pbix`.
+If needed, update `DataFilePath` to:
+
+- `/workspace/power_bi_dashboard/data/equipment_risk_history.csv`
 
 ## Dashboard focus
 

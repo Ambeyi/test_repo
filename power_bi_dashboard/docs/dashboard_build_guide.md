@@ -17,6 +17,13 @@ And satisfy your request:
 
 ## 2) Load data
 
+You can either:
+
+- build manually from CSV files (steps below), or
+- open the prebuilt template: `pbix/Distribution_Risk_Dashboard.pbit`
+
+If you open the template, refresh and save as `.pbix`.
+
 1. Open **Power BI Desktop**.
 2. Get Data -> **Text/CSV**:
    - `equipment_risk_history.csv`

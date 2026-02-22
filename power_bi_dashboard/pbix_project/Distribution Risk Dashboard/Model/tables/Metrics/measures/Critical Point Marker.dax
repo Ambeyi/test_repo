@@ -1,0 +1,1 @@
+IF([Sum of Sales Amount] >= [Critical Threshold], [Sum of Sales Amount], BLANK())

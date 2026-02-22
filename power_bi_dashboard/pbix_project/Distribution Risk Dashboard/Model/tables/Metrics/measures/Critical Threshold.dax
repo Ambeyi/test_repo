@@ -1,0 +1,9 @@
+VAR Eq = SELECTEDVALUE(Product[Category])
+RETURN
+SWITCH(
+    Eq,
+    "Overhead Line", 75,
+    "Insulator", 70,
+    "Arrester", 72,
+    72
+)
