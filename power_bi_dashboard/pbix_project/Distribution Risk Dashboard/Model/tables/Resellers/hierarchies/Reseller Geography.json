@@ -1,0 +1,15 @@
+{
+  "name": "Reseller Geography",
+  "levels": [
+    {
+      "name": "Reseller Country",
+      "ordinal": 0,
+      "column": "Reseller Country"
+    },
+    {
+      "name": "Reseller Address",
+      "ordinal": 1,
+      "column": "Reseller Address"
+    }
+  ]
+}

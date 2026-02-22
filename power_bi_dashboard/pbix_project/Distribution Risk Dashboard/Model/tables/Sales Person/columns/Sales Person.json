@@ -1,0 +1,6 @@
+{
+  "name": "Sales Person",
+  "dataType": "string",
+  "sourceColumn": "Sales Person",
+  "summarizeBy": "none"
+}

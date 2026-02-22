@@ -1,0 +1,63 @@
+{
+  "name": "Distribution Risk Dashboard",
+  "compatibilityLevel": 1550,
+  "model": {
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "relationships": [
+      {
+        "name": "rel_sales_product",
+        "fromTable": "Sales Order",
+        "fromColumn": "Product Number",
+        "toTable": "Product",
+        "toColumn": "Number"
+      },
+      {
+        "name": "rel_sales_date",
+        "fromTable": "Sales Order",
+        "fromColumn": "End of Month",
+        "toTable": "Date",
+        "toColumn": "End of Month"
+      },
+      {
+        "name": "rel_sales_resellers",
+        "fromTable": "Sales Order",
+        "fromColumn": "Reseller Address",
+        "toTable": "Resellers",
+        "toColumn": "Reseller Address"
+      },
+      {
+        "name": "rel_sales_salesperson",
+        "fromTable": "Sales Order",
+        "fromColumn": "Sales Territory Group",
+        "toTable": "Sales Person",
+        "toColumn": "Sales Territory Group"
+      }
+    ],
+    "expressions": [
+      {
+        "name": "DataFilePath",
+        "kind": "m"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.99.621.0 (21.11)"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"DataFilePath\", \"RiskHistory\", \"Date\", \"Product\", \"Sales Order\", \"Resellers\", \"Sales Person\", \"Metrics\"]"
+      }
+    ]
+  }
+}

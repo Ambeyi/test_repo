@@ -1,0 +1,7 @@
+{
+  "name": "Thumbnail",
+  "dataType": "string",
+  "sourceColumn": "Thumbnail",
+  "summarizeBy": "none",
+  "dataCategory": "ImageUrl"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Sales Amount",
+  "dataType": "decimal",
+  "sourceColumn": "Sales Amount",
+  "summarizeBy": "sum",
+  "formatString": "0.0"
+}

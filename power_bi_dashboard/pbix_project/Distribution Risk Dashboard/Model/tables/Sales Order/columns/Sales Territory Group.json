@@ -1,0 +1,6 @@
+{
+  "name": "Sales Territory Group",
+  "dataType": "string",
+  "sourceColumn": "Sales Territory Group",
+  "summarizeBy": "none"
+}

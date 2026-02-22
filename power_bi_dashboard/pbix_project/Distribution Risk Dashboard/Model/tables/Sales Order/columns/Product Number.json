@@ -1,0 +1,6 @@
+{
+  "name": "Product Number",
+  "dataType": "string",
+  "sourceColumn": "Product Number",
+  "summarizeBy": "none"
+}

@@ -1,0 +1,13 @@
+Power BI PBIX note
+====================
+
+This environment can build a model-containing template file (.pbit) using pbi-tools.
+The generated file is:
+  Distribution_Risk_Dashboard.pbit
+
+To get a .pbix file:
+1) Open the .pbit in Power BI Desktop.
+2) Set/confirm DataFilePath (if prompted) to:
+   /workspace/power_bi_dashboard/data/equipment_risk_history.csv
+3) Refresh.
+4) File -> Save As -> .pbix

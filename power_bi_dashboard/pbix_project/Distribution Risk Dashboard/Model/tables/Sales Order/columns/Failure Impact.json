@@ -1,0 +1,7 @@
+{
+  "name": "Failure Impact",
+  "dataType": "int64",
+  "sourceColumn": "Failure Impact",
+  "summarizeBy": "sum",
+  "formatString": "0"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Number",
+  "dataType": "string",
+  "sourceColumn": "Number",
+  "summarizeBy": "none"
+}

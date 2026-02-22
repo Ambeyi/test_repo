@@ -1,0 +1,7 @@
+{
+  "name": "Sales Territory Country",
+  "dataType": "string",
+  "sourceColumn": "Sales Territory Country",
+  "summarizeBy": "none",
+  "dataCategory": "Country"
+}

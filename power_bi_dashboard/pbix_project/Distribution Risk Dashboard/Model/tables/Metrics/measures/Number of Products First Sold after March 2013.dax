@@ -1,0 +1,7 @@
+CALCULATE(
+    DISTINCTCOUNT('Sales Order'[Product Number]),
+    FILTER(
+        'Sales Order',
+        'Sales Order'[Sales Amount] >= [Critical Threshold]
+    )
+)
