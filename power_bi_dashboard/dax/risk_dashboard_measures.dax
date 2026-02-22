@@ -1,0 +1,150 @@
+-- ============================================================================
+-- Power BI DAX pack: Distribution overhead lines / insulators / arresters
+-- Source tables:
+--   1) equipment_risk_history
+--   2) risk_thresholds
+-- ============================================================================
+
+-- Optional calculated date table
+DateTable =
+ADDCOLUMNS (
+    CALENDAR ( MIN ( equipment_risk_history[Date] ), MAX ( equipment_risk_history[Date] ) ),
+    "Year", YEAR ( [Date] ),
+    "Month Number", MONTH ( [Date] ),
+    "Month", FORMAT ( [Date], "MMM" ),
+    "Year-Month", FORMAT ( [Date], "YYYY-MM" )
+)
+
+-- ============================================================================
+-- Core KPI measures
+-- ============================================================================
+
+Risk Index (Avg) =
+AVERAGE ( equipment_risk_history[RiskIndex] )
+
+Latest Snapshot Date =
+MAX ( equipment_risk_history[Date] )
+
+Risk Index (Latest) =
+VAR LastDate = [Latest Snapshot Date]
+RETURN
+    CALCULATE (
+        [Risk Index (Avg)],
+        equipment_risk_history[Date] = LastDate
+    )
+
+Assets Count =
+DISTINCTCOUNT ( equipment_risk_history[AssetID] )
+
+Assets Count (Latest) =
+VAR LastDate = [Latest Snapshot Date]
+RETURN
+    CALCULATE (
+        [Assets Count],
+        equipment_risk_history[Date] = LastDate
+    )
+
+-- ============================================================================
+-- Threshold and critical-point logic
+-- ============================================================================
+
+Critical Threshold =
+COALESCE ( SELECTEDVALUE ( risk_thresholds[CriticalThreshold] ), 75 )
+
+Warning Threshold =
+COALESCE ( SELECTEDVALUE ( risk_thresholds[WarningThreshold] ), 65 )
+
+Emergency Threshold =
+COALESCE ( SELECTEDVALUE ( risk_thresholds[EmergencyThreshold] ), 88 )
+
+Critical Point Marker =
+VAR CurrentRisk = [Risk Index (Avg)]
+RETURN
+    IF ( CurrentRisk >= [Critical Threshold], CurrentRisk, BLANK () )
+
+Warning Point Marker =
+VAR CurrentRisk = [Risk Index (Avg)]
+RETURN
+    IF ( CurrentRisk >= [Warning Threshold], CurrentRisk, BLANK () )
+
+Critical Events (Count) =
+SUM ( equipment_risk_history[CriticalFlag] )
+
+Critical Assets (Latest) =
+VAR LastDate = [Latest Snapshot Date]
+VAR LatestRows =
+    FILTER (
+        equipment_risk_history,
+        equipment_risk_history[Date] = LastDate
+    )
+RETURN
+    SUMX (
+        VALUES ( equipment_risk_history[AssetID] ),
+        VAR AssetRisk =
+            CALCULATE ( MAX ( equipment_risk_history[RiskIndex] ), LatestRows )
+        VAR AssetType =
+            CALCULATE ( SELECTEDVALUE ( equipment_risk_history[EquipmentType] ), LatestRows )
+        VAR AssetThreshold =
+            COALESCE (
+                LOOKUPVALUE (
+                    risk_thresholds[CriticalThreshold],
+                    risk_thresholds[EquipmentType], AssetType
+                ),
+                [Critical Threshold]
+            )
+        RETURN
+            IF ( NOT ISBLANK ( AssetRisk ) && AssetRisk >= AssetThreshold, 1, 0 )
+    )
+
+Critical Assets (%) (Latest) =
+DIVIDE ( [Critical Assets (Latest)], [Assets Count (Latest)], 0 )
+
+-- ============================================================================
+-- Impact and action prioritization
+-- ============================================================================
+
+Failure Impact (Latest USD) =
+VAR LastDate = [Latest Snapshot Date]
+RETURN
+    CALCULATE (
+        SUM ( equipment_risk_history[FailureImpactUSD] ),
+        equipment_risk_history[Date] = LastDate
+    )
+
+Critical Failure Impact (Latest USD) =
+VAR LastDate = [Latest Snapshot Date]
+VAR LatestRowsWithThreshold =
+    ADDCOLUMNS (
+        FILTER ( equipment_risk_history, equipment_risk_history[Date] = LastDate ),
+        "__Threshold",
+            COALESCE (
+                LOOKUPVALUE (
+                    risk_thresholds[CriticalThreshold],
+                    risk_thresholds[EquipmentType], equipment_risk_history[EquipmentType]
+                ),
+                [Critical Threshold]
+            )
+    )
+RETURN
+    SUMX (
+        FILTER ( LatestRowsWithThreshold, equipment_risk_history[RiskIndex] >= [__Threshold] ),
+        equipment_risk_history[FailureImpactUSD]
+    )
+
+Maintenance Cost (Latest USD) =
+VAR LastDate = [Latest Snapshot Date]
+RETURN
+    CALCULATE (
+        SUM ( equipment_risk_history[InspectionCostUSD] ),
+        equipment_risk_history[Date] = LastDate
+    )
+
+Action Priority Score =
+SUMX (
+    equipment_risk_history,
+    DIVIDE (
+        equipment_risk_history[RiskIndex] * equipment_risk_history[FailureImpactUSD],
+        1000,
+        0
+    )
+)
